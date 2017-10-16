@@ -7,6 +7,9 @@ import javafx.stage.Stage;
 public class MainWindow extends Application {
 
     public static void main(String[] args) throws Exception {
+        ConnectionToDB d = new ConnectionToDB();
+        d.getProductIds().stream().forEach(System.out::println);
+
         launch(args);
     }
 
