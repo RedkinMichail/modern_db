@@ -1,0 +1,13 @@
+CREATE TABLE public.subjects_names
+(
+    id integer NOT NULL,
+    subjects_name text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT subjects_names_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.subjects_names
+    OWNER to postgres;
