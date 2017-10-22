@@ -11,12 +11,6 @@ public class ConnectionToDB {
         Class.forName("org.postgresql.Driver");
         String url = "jdbc:postgresql://localhost/postgres";
         return DriverManager.getConnection(url,"postgres", "postgres");
-
-
-//        Connection connection = null;
-//        connection = DriverManager.getConnection(
-//                "jdbc:postgresql://hostname:port/dbname","username", "password");
-//        connection.close();
     }
 
     public List getProductIds() throws Exception {

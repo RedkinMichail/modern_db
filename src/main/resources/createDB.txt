@@ -1,13 +1,81 @@
-CREATE TABLE public.subjects_names
+##first table
+
+
+-- Table: public."Rooms"
+
+-- DROP TABLE public."Rooms";
+
+CREATE TABLE public."Rooms"
 (
-    id integer NOT NULL,
-    subjects_name text COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT subjects_names_pkey PRIMARY KEY (id)
+    id integer NOT NULL DEFAULT nextval('"Rooms_id_seq"'::regclass),
+    compus_number integer NOT NULL,
+    rooms_number integer NOT NULL,
+    capacity integer NOT NULL,
+    CONSTRAINT "Rooms_pkey" PRIMARY KEY (compus_number, rooms_number)
 )
 WITH (
     OIDS = FALSE
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public.subjects_names
+ALTER TABLE public."Rooms"
+    OWNER to postgres;
+
+## second table
+
+-- Table: public."Subdivisions"
+
+-- DROP TABLE public."Subdivisions";
+
+CREATE TABLE public."Subdivisions"
+(
+    id integer NOT NULL DEFAULT nextval('"Subdivisions_id_seq"'::regclass),
+    "Code" integer NOT NULL,
+    "Name" text COLLATE pg_catalog."default" NOT NULL,
+    "codeOfHeadOfDivision" integer NOT NULL,
+    CONSTRAINT subdivision_code PRIMARY KEY ("Code"),
+    CONSTRAINT id UNIQUE (id),
+    CONSTRAINT subdivisione_code_head FOREIGN KEY ("codeOfHeadOfDivision")
+        REFERENCES public."Subdivisions" ("Code") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Subdivisions"
+    OWNER to postgres;
+COMMENT ON TABLE public."Subdivisions"
+    IS 'list of subdivisions';
+
+## third table
+
+-- Table: public."Teachers"
+
+-- DROP TABLE public."Teachers";
+
+CREATE TABLE public."Teachers"
+(
+    id integer NOT NULL DEFAULT nextval('"Teachers_id_seq"'::regclass),
+    surname text COLLATE pg_catalog."default" NOT NULL,
+    name text COLLATE pg_catalog."default" NOT NULL,
+    middle_name text COLLATE pg_catalog."default" NOT NULL,
+    abbreviation text COLLATE pg_catalog."default" NOT NULL,
+    passport_data text COLLATE pg_catalog."default" NOT NULL,
+    subdivision_code integer NOT NULL,
+    CONSTRAINT "Teachers_pkey" PRIMARY KEY (passport_data),
+    CONSTRAINT subdivision_code FOREIGN KEY (subdivision_code)
+        REFERENCES public."Subdivisions" ("Code") MATCH SIMPLE
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Teachers"
     OWNER to postgres;
