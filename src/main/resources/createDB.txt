@@ -1,13 +1,13 @@
 ##first table
 
 
--- Table: public."Rooms"
+-- Table: public."rooms"
 
--- DROP TABLE public."Rooms";
+-- DROP TABLE public."rooms";
 
-CREATE TABLE public."Rooms"
+CREATE TABLE public."rooms"
 (
-    id integer NOT NULL DEFAULT nextval('"Rooms_id_seq"'::regclass),
+    id integer NOT NULL DEFAULT nextval('"rooms_id_seq"'::regclass),
     compus_number integer NOT NULL,
     rooms_number integer NOT NULL,
     capacity integer NOT NULL,
@@ -18,25 +18,25 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Rooms"
+ALTER TABLE public."rooms"
     OWNER to postgres;
 
 ## second table
 
--- Table: public."Subdivisions"
+-- Table: public."subdivisions"
 
--- DROP TABLE public."Subdivisions";
+-- DROP TABLE public."subdivisions";
 
-CREATE TABLE public."Subdivisions"
+CREATE TABLE public."subdivisions"
 (
-    id integer NOT NULL DEFAULT nextval('"Subdivisions_id_seq"'::regclass),
+    id integer NOT NULL DEFAULT nextval('"subdivisions_id_seq"'::regclass),
     "Code" integer NOT NULL,
     "Name" text COLLATE pg_catalog."default" NOT NULL,
     "codeOfHeadOfDivision" integer NOT NULL,
     CONSTRAINT subdivision_code PRIMARY KEY ("Code"),
     CONSTRAINT id UNIQUE (id),
     CONSTRAINT subdivisione_code_head FOREIGN KEY ("codeOfHeadOfDivision")
-        REFERENCES public."Subdivisions" ("Code") MATCH SIMPLE
+        REFERENCES public."subdivisions" ("Code") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
@@ -46,20 +46,20 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Subdivisions"
+ALTER TABLE public."subdivisions"
     OWNER to postgres;
-COMMENT ON TABLE public."Subdivisions"
+COMMENT ON TABLE public."subdivisions"
     IS 'list of subdivisions';
 
 ## third table
 
--- Table: public."Teachers"
+-- Table: public."teachers"
 
--- DROP TABLE public."Teachers";
+-- DROP TABLE public."teachers";
 
-CREATE TABLE public."Teachers"
+CREATE TABLE public."teachers"
 (
-    id integer NOT NULL DEFAULT nextval('"Teachers_id_seq"'::regclass),
+    id integer NOT NULL DEFAULT nextval('"teachers_id_seq"'::regclass),
     surname text COLLATE pg_catalog."default" NOT NULL,
     name text COLLATE pg_catalog."default" NOT NULL,
     middle_name text COLLATE pg_catalog."default" NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE public."Teachers"
     subdivision_code integer NOT NULL,
     CONSTRAINT "Teachers_pkey" PRIMARY KEY (passport_data),
     CONSTRAINT subdivision_code FOREIGN KEY (subdivision_code)
-        REFERENCES public."Subdivisions" ("Code") MATCH SIMPLE
+        REFERENCES public."subdivisions" ("Code") MATCH SIMPLE
         ON UPDATE RESTRICT
         ON DELETE RESTRICT
 )
@@ -77,5 +77,5 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Teachers"
+ALTER TABLE public."teachers"
     OWNER to postgres;
