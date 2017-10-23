@@ -11,7 +11,7 @@ CREATE TABLE public."rooms"
     compus_number integer NOT NULL,
     rooms_number integer NOT NULL,
     capacity integer NOT NULL,
-    CONSTRAINT "Rooms_pkey" PRIMARY KEY (compus_number, rooms_number)
+    CONSTRAINT "rooms_pkey" PRIMARY KEY (compus_number, rooms_number)
 )
 WITH (
     OIDS = FALSE

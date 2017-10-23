@@ -1,0 +1,25 @@
+CREATE TABLE rooms (
+    id serial NOT NULL,
+	compus_number integer NOT NULL,
+    rooms_number integer NOT NULL,
+    capacity integer NOT NULL
+);
+
+CREATE TABLE subdivisions
+(
+    id serial NOT NULL,
+    code integer NOT NULL,
+    name text NOT NULL,
+    code_of_head_of_division integer NOT NULL
+);
+
+CREATE TABLE teachers
+(
+    id serial NOT NULL,
+    surname text NOT NULL,
+    name text NOT NULL,
+    middle_name text NOT NULL,
+    abbreviation text NOT NULL,
+    passport_data text NOT NULL,
+    subdivision_code integer NOT NULL,
+);

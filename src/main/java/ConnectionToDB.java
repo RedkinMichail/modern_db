@@ -19,7 +19,7 @@ public class ConnectionToDB {
         Connection con = getConnection();
         // Выполнение SQL-запроса
         ResultSet rs = con.createStatement().executeQuery(
-                "Select id From subdivisions");
+                "Select id From rooms");
         // Перечисляем результаты выборки
         while (rs.next()) {
             // Из каждой строки выборки выбираем
