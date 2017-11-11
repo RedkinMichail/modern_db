@@ -10,14 +10,6 @@
     <name>Maven Quick Start Archetype</name>
     <url>http://maven.apache.org</url>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver</artifactId>
-            <version>3.5.0</version>
-        </dependency>
-    </dependencies>
-
     <build>
         <plugins>
 
@@ -33,4 +25,13 @@
         </plugins>
 
     </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+    </dependencies>
+
 </project>
