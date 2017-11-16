@@ -3,10 +3,13 @@ package mongoDB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoWriteException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+
+import java.util.Collection;
 
 public class MongoDBWorker {
 
@@ -34,5 +37,10 @@ public class MongoDBWorker {
 
     public void updateDocument(String nameOfDeparture) {
 
+    }
+
+    protected FindIterable<Document> findAll(String collectionName, String nameOfField, String nameOfObject) {
+        Bson condition = new Document(nameOfField, nameOfObject);
+        return getCollection(collectionName).find(condition);
     }
 }
