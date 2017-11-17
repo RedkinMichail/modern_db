@@ -29,18 +29,17 @@ public class MongoDBWorker {
         }
     }
 
-    protected void deleteField(String collectionName, String nameOfField, Object nameOfObject) {
-        Bson condition = new Document(nameOfField, nameOfObject);
-        getCollection(collectionName).deleteOne(condition);
+    protected void deleteField(String collectionName, Document doc) {
+        getCollection(collectionName).deleteOne(doc);
     }
 
 
-    public void updateDocument(String nameOfDeparture) {
+    public void updateDocument(String collectionName, Document doc) {
+//        getCollection(collectionName).updateOne();
 
     }
 
-    protected FindIterable<Document> findAll(String collectionName, String nameOfField, String nameOfObject) {
-        Bson condition = new Document(nameOfField, nameOfObject);
-        return getCollection(collectionName).find(condition);
+    protected FindIterable<Document> findAll(String collectionName, Document doc) {
+        return getCollection(collectionName).find(doc);
     }
 }
