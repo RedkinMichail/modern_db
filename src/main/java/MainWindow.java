@@ -1,42 +1,33 @@
-import com.mongodb.client.MongoCursor;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import Collections.Departure;
 import Collections.Room;
-import org.bson.Document;
+import ViewModel.MainWindowViewModel;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
-
-public class MainWindow extends Application {
-
-    public static void main(String[] args) throws Exception {
-//        launch(args);
-        // Standard URI format: mongodb://[dbuser:dbpassword@]host:port/dbname
-        //чисто пример
-        Departure d = new Departure();
-//        d.addDeparture("third", "secondN", "secondH");
-//        d.addDeparture("fourth", "secondN", "secondH");
-//        d.addDeparture("fifth", "secondN", "secondHHHH");
-        System.out.println("third **** " + d.findDepartureByName("third").toString());
-        MongoCursor<Document> iter = d.findAllDepartures("NameOfParent", "secondN");
-        while (iter.hasNext()) {
-            System.out.println("exyyy *** " + iter.next());
-        }
-//        Room r = new Room();
-//        r.addRoom(1, 101, 10);
-//        r.addRoom(2, 201, 20);
-//        r.deleteRoom(1);
-    }
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        String fxmlFile = "/fxml/MainWindow.fxml";
-        FXMLLoader loader = new FXMLLoader();
-        Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
-        stage.setTitle("MainWindow");
-        stage.setScene(new Scene(root));
-        stage.show();
+public class MainWindow {
+    @FXML
+    private Button viewRoomsButton;
+    @FXML
+    private MainWindowViewModel viewModel;
+    @FXML
+    private TableView<Room> roomTableView;
+    @FXML
+    private TableColumn<Room, String> corpusNumberColumn;
+    @FXML
+    private TableColumn<Room, String> roomNumberColumn;
+    @FXML
+    private TableColumn<Room, String> maxPeopleColumn;
+    @FXML
+    void initialize(){
+        viewModel = new MainWindowViewModel();
+        viewRoomsButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(final ActionEvent event) {
+                viewModel.viewRooms();
+            }
+        });
     }
 }
