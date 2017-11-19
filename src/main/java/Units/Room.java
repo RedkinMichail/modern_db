@@ -1,13 +1,22 @@
-package Collections;
+package Units;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Room  {
     private int corpusNumber;
     private int roomNumber;
     private int maxPeople;
-    private List<String> equipments;
+    private String[] equipments;
 
+    public Room(int _corpusNumber, int _roomNumber, int _maxPeople, String[] _equipments){
+        corpusNumber = _corpusNumber;
+        roomNumber = _roomNumber;
+        maxPeople = _maxPeople;
+        equipments =  _equipments.clone();
+    }
     public int getCorpusNumber() {
         return corpusNumber;
     }
@@ -32,11 +41,11 @@ public class Room  {
         this.maxPeople = maxPeople;
     }
 
-    public List<String> getEquipments() {
+    public String[] getEquipments() {
         return equipments;
     }
 
-    public void setEquipments(List<String> equipments) {
-        this.equipments = equipments;
+    public void setEquipments(String[] equipments) {
+        this.equipments = equipments.clone();
     }
 }

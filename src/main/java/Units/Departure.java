@@ -1,4 +1,4 @@
-package Collections;
+package Units;
 
 public class Departure {
     private int id;
