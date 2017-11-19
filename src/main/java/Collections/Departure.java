@@ -1,13 +1,40 @@
 package Collections;
 
-import com.mongodb.client.MongoCursor;
-import mongoDB.Consts;
-import mongoDB.MongoDBWorker;
-import org.bson.Document;
+public class Departure {
+    private int id;
+    private String name;
+    private int parentId;
+    private int leaderId;
 
-import java.util.Collection;
-import java.util.UUID;
+    public int getId() {
+        return id;
+    }
 
-public class Departure extends MongoDBWorker {
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
+
+    public int getLeaderId() {
+        return leaderId;
+    }
+
+    public void setLeaderId(int leaderId) {
+        this.leaderId = leaderId;
+    }
 }

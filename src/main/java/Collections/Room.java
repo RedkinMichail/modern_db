@@ -1,13 +1,12 @@
 package Collections;
 
-import mongoDB.Consts;
-import mongoDB.MongoDBWorker;
-import org.bson.Document;
+import java.util.List;
 
 public class Room  {
     private int corpusNumber;
     private int roomNumber;
     private int maxPeople;
+    private List<String> equipments;
 
     public int getCorpusNumber() {
         return corpusNumber;
@@ -31,5 +30,13 @@ public class Room  {
 
     public void setMaxPeople(int maxPeople) {
         this.maxPeople = maxPeople;
+    }
+
+    public List<String> getEquipments() {
+        return equipments;
+    }
+
+    public void setEquipments(List<String> equipments) {
+        this.equipments = equipments;
     }
 }
