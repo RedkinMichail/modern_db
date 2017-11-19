@@ -15,8 +15,8 @@ import java.util.UUID;
 
 public class MongoDBWorker {
 
-    private static MongoCollection<Document> getCollection(String collectionName){
-        MongoClientURI uri  = new MongoClientURI("mongodb://admin:admin@ds255455.mlab.com:55455/schedule");
+    private static MongoCollection<Document> getCollection(String collectionName) {
+        MongoClientURI uri = new MongoClientURI("mongodb://admin:admin@ds255455.mlab.com:55455/schedule");
         MongoClient client = new MongoClient(uri);
         MongoDatabase db = client.getDatabase(uri.getDatabase());
         return db.getCollection(collectionName);
@@ -49,6 +49,15 @@ public class MongoDBWorker {
 
     }
 
+    protected void deleteField(String collectionName, Document doc) {
+        getCollection(collectionName).deleteOne(doc);
+    }
+
+
+    public void updateDocument(String collectionName, Document doc) {
+//        getCollection(collectionName).updateOne();
+    }
+
     public static void deleteRoom(int roomNumber) {
         deleteField(Consts.ROOM_COLLECTION, "RoomNumber", roomNumber);
     }
@@ -60,6 +69,10 @@ public class MongoDBWorker {
     protected static FindIterable<Document> findAll(String collectionName, String nameOfField, String nameOfObject) {
         Bson condition = new Document(nameOfField, nameOfObject);
         return getCollection(collectionName).find(condition);
+    }
+
+    protected FindIterable<Document> findAll(String collectionName, Document doc) {
+        return getCollection(collectionName).find(doc);
     }
 
     public static void addDeparture(String nameOfDeparture, String nameOfParent, String headOfTheDeparture) {
@@ -78,15 +91,26 @@ public class MongoDBWorker {
         deleteField(Consts.DEPARTURE_COLLECTION, "NameOfDeparture", nameOfDeparture);
     }
 
-    public static void updateDeparture(String nameOfDeparture) {
-        updateDocument(nameOfDeparture);
+    public Document findRoomInHousing(int roomNumber, int housingNumber) {
+        Document room = new Document("RoomNumber", roomNumber)
+                .append("HousingNumber", housingNumber);
+        return findAll(Consts.ROOM_COLLECTION, room).first();
     }
 
-    public static Document findDepartureByName(String nameOfDeparture) {
-        return findAll(Consts.DEPARTURE_COLLECTION, "NameOfDeparture", nameOfDeparture).first();
+    public MongoCursor<Document> findAllRooms(int roomNumber) {
+        return findAll(Consts.ROOM_COLLECTION, new Document("RoomNumber", roomNumber)).iterator();
     }
 
-    public static MongoCursor<Document> findAllDepartures(String nameOfField, String nameOfObject) {
-        return findAll(Consts.DEPARTURE_COLLECTION, nameOfField, nameOfObject).iterator();
+    public void updateDeparture(String nameOfDeparture) {
+        updateDocument(Consts.DEPARTURE_COLLECTION, new Document("NameOfDepartures", nameOfDeparture));
+    }
+
+    public Document findDepartureByName(String nameOfDeparture) {
+        return findAll(Consts.DEPARTURE_COLLECTION, new Document("NameOfDeparture", nameOfDeparture)).first();
+    }
+
+    public MongoCursor<Document> findAllDepartures(String nameOfField, String nameOfObject) {
+        return findAll(Consts.DEPARTURE_COLLECTION, new Document(nameOfField, nameOfObject)).iterator();
+
     }
 }
