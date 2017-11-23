@@ -3,13 +3,14 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainWindow">
    <children>
-      <TableView layoutX="204.0" layoutY="14.0" prefHeight="297.0" prefWidth="414.0" fx:id="roomTableView" />
-      <Button layoutY="30.0" mnemonicParsing="false" text="Показать помещения" fx:id="viewRoomsButton" />
+      <TableView fx:id="roomTableView" layoutX="204.0" layoutY="14.0" prefHeight="297.0" prefWidth="414.0" />
+      <Button fx:id="viewRoomsButton" layoutY="30.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="199.0" text="Показать помещения" />
+      <Button fx:id="viewDepartmentsButton" layoutY="78.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="199.0" text="Показать департаменты" />
    </children>
 </AnchorPane>

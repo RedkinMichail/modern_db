@@ -13,7 +13,7 @@ import org.bson.conversions.Bson;
 import java.util.Collection;
 import java.util.UUID;
 
-public class MongoDBWorker {
+public class DataRepository {
 
     private static MongoCollection<Document> getCollection(String collectionName) {
         MongoClientURI uri = new MongoClientURI("mongodb://admin:admin@ds255455.mlab.com:55455/schedule");
