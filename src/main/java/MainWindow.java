@@ -1,4 +1,4 @@
-import Units.Room;
+import UnitModels.RoomModel;
 import ViewModel.MainWindowViewModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,26 +14,27 @@ public class MainWindow {
     @FXML
     private MainWindowViewModel viewModel;
     @FXML
-    private TableView<Room> roomTableView = new TableView<Room>();
+    private TableView<RoomModel> roomTableView = new TableView<RoomModel>();
     @FXML
-    private TableColumn<Room, Integer> corpusNumberColumn = new TableColumn<Room, Integer>("Номер корпуса");
+    private TableColumn<RoomModel, Integer> corpusNumberColumn = new TableColumn<RoomModel, Integer>("Номер корпуса");
     @FXML
-    private TableColumn<Room, Integer> roomNumberColumn = new TableColumn<Room, Integer>("Номер комнаты");
+    private TableColumn<RoomModel, Integer> roomNumberColumn = new TableColumn<RoomModel, Integer>("Номер комнаты");
     @FXML
-    private TableColumn<Room, Integer> maxPeopleColumn =  new TableColumn<Room, Integer>("Количество мест");
+    private TableColumn<RoomModel, Integer> maxPeopleColumn =  new TableColumn<RoomModel, Integer>("Количество мест");
     @FXML
-    private TableColumn<Room, String> equipmentsColumn = new TableColumn<Room, String>("Оборудование");
+    private TableColumn<RoomModel, String> equipmentsColumn = new TableColumn<RoomModel, String>("Оборудование");
     @FXML
     void initialize(){
         viewModel = new MainWindowViewModel();
-        corpusNumberColumn.setCellValueFactory(new PropertyValueFactory<Room, Integer>("num"));
-        roomNumberColumn.setCellValueFactory(new PropertyValueFactory<Room, Integer>("num"));
-        maxPeopleColumn.setCellValueFactory(new PropertyValueFactory<Room, Integer>("num"));
-        equipmentsColumn.setCellValueFactory(new PropertyValueFactory<Room, String>("num"));
+        corpusNumberColumn.setCellValueFactory(new PropertyValueFactory<RoomModel, Integer>("corpusNumber"));
+        roomNumberColumn.setCellValueFactory(new PropertyValueFactory<RoomModel, Integer>("roomNumber"));
+        maxPeopleColumn.setCellValueFactory(new PropertyValueFactory<RoomModel, Integer>("maxPeople"));
+        equipmentsColumn.setCellValueFactory(new PropertyValueFactory<RoomModel, String>("equipments"));
         viewRoomsButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(final ActionEvent event) {
                 roomTableView.setEditable(true);
+                roomTableView.getColumns().removeAll(corpusNumberColumn,roomNumberColumn,maxPeopleColumn,equipmentsColumn);
                 roomTableView.setItems(viewModel.getRoomsList());
                 roomTableView.getColumns().addAll(corpusNumberColumn,roomNumberColumn,maxPeopleColumn,equipmentsColumn);
             }

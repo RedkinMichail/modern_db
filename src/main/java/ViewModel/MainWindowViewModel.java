@@ -1,24 +1,23 @@
 package ViewModel;
 
-import Units.Room;
+import UnitModels.RoomModel;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainWindowViewModel {
     private StringProperty corpusNumber;
     private StringProperty roomNumber;
     private IntegerProperty maxPeople;
-    public ObservableList<Room> getRoomsList() {
+    public ObservableList<RoomModel> getRoomsList() {
         System.out.println("getRoomsList button");
-        ArrayList<Room> rooms = new ArrayList<Room>();
+        ArrayList<RoomModel> rooms = new ArrayList<RoomModel>();
         String[] equipments = {"computer", "desk"};
-        rooms.add(new Room(1,2,22,equipments));
-        ObservableList<Room> observableList = FXCollections.observableList(rooms);
+        rooms.add(new RoomModel(1,2,22,equipments));
+        ObservableList<RoomModel> observableList = FXCollections.observableList(rooms);
         return observableList;
     }
 }
