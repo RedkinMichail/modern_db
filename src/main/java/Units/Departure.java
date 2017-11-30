@@ -6,6 +6,12 @@ public class Departure {
     private int parentId;
     private int leaderId;
 
+    public Departure(int id, String name, int parentId, int leaderId){
+        this.id = id;
+        this.name = name;
+        this.parentId = parentId;
+        this.leaderId = leaderId;
+    }
     public int getId() {
         return id;
     }
