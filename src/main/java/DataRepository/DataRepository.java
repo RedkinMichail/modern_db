@@ -1,4 +1,4 @@
-package mongoDB;
+package DataRepository;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -10,7 +10,6 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import java.util.Collection;
 import java.util.UUID;
 
 public class DataRepository {

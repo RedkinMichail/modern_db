@@ -1,4 +1,4 @@
-package mongoDB;
+package DataRepository;
 
 public interface Consts {
     public static final String DEPARTURE_COLLECTION = "Departures";

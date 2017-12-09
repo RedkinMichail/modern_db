@@ -1,4 +1,6 @@
-import ViewModel.MainWindowViewModel;
+package View;
+
+import ViewModel.DataViewModel;
 import ViewModel.RowModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,13 +10,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class MainWindow {
+public class DataViewWindow {
     @FXML
     private Button viewRoomsButton;
     @FXML
     private Button viewDepartmentsButton;
     @FXML
-    private MainWindowViewModel viewModel;
+    private DataViewModel viewModel;
     @FXML
     private TableView<RowModel> tableView = new TableView<RowModel>();
     @FXML
@@ -27,7 +29,7 @@ public class MainWindow {
     private TableColumn<RowModel, String> column4 = new TableColumn<RowModel, String>();
     @FXML
     void initialize(){
-        viewModel = new MainWindowViewModel();
+        viewModel = new DataViewModel();
         column1.setText("Номер корпуса");
         viewRoomsButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override

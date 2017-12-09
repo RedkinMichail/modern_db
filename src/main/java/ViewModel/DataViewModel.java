@@ -1,18 +1,15 @@
 package ViewModel;
 
-import UnitModels.DepartureModel;
-import UnitModels.RoomModel;
+import DataRepository.IDataRepository;
 import Units.Departure;
 import Units.Room;
-import com.mongodb.client.MongoCursor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import mongoDB.DataRepository;
-import org.bson.Document;
 
 import java.util.ArrayList;
 
-public class MainWindowViewModel {
+public class DataViewModel {
+    public IDataRepository dataRepository;
     public ObservableList<RowModel> getRoomsList() {
         System.out.println("getRoomsList button");
         ArrayList<RowModel> rooms = new ArrayList<RowModel>();

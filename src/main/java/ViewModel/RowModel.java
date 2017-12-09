@@ -2,6 +2,7 @@ package ViewModel;
 
 import Units.Departure;
 import Units.Room;
+import Units.StudyUnit;
 import javafx.beans.property.SimpleStringProperty;
 
 public class RowModel {
@@ -21,6 +22,12 @@ public class RowModel {
         column2 = new SimpleStringProperty(String.valueOf(departure.getName()));
         column3 = new SimpleStringProperty(String.valueOf(departure.getParentId()));
         column4 = new SimpleStringProperty(String.valueOf(departure.getLeaderId()));
+    }
+
+    public RowModel(StudyUnit studyUnit){
+        column1 = new SimpleStringProperty(String.valueOf(studyUnit.getId()));
+        column2 = new SimpleStringProperty(String.valueOf(studyUnit.getParentId()));
+        column3 = new SimpleStringProperty(String.valueOf(studyUnit.getPeopleCount()));
     }
 
     public String getColumn1() {

@@ -7,10 +7,10 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        String fxmlFile = "/fxml/MainWindow.fxml";
+        String fxmlFile = "/fxml/DataViewWindow.fxml";
         FXMLLoader loader = new FXMLLoader();
         Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
-        stage.setTitle("MainWindow");
+        stage.setTitle("View.DataViewWindow");
         stage.setScene(new Scene(root));
         stage.show();
     }
