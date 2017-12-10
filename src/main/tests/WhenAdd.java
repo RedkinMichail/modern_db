@@ -1,5 +1,6 @@
 import DataRepository.FakeDataRepository;
 import DataRepository.IDataRepository;
+import DataRepository.DataRepository;
 import Units.Room;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,9 +15,7 @@ public class WhenAdd {
     @Before
     public void setUp(){
         dataRepository =  new FakeDataRepository();
-        String[] equipments = {"desk", "computer"};
-        Room room = new Room(1,1,20,equipments);
-        ArrayList rooms;
+        room = new Room(1,1,20,"desk,computer");
     }
 
     @Test

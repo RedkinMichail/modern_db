@@ -1,5 +1,7 @@
 package DataRepository;
 
+import Units.Departure;
+import Units.Room;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoWriteException;
@@ -10,9 +12,10 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
-public class DataRepository {
+public class DataRepository implements IDataRepository {
 
     private static MongoCollection<Document> getCollection(String collectionName) {
         MongoClientURI uri = new MongoClientURI("mongodb://admin:admin@ds255455.mlab.com:55455/schedule");
@@ -111,5 +114,36 @@ public class DataRepository {
     public MongoCursor<Document> findAllDepartures(String nameOfField, String nameOfObject) {
         return findAll(Consts.DEPARTURE_COLLECTION, new Document(nameOfField, nameOfObject)).iterator();
 
+    }
+
+    @Override
+    public ArrayList<Room> getAllRooms() {
+        MongoCursor<Document> cursor = getCollection(Consts.ROOM_COLLECTION).find().iterator();
+        ArrayList<Room> rooms = new ArrayList<>();
+
+        while (cursor.hasNext()){
+            Document doc = cursor.next();
+            Room room = new Room(doc.getInteger("CorpusNumber")
+            ,doc.getInteger("RoomNumber")
+            ,doc.getInteger("MaxPeople")
+            ,doc.get("Equipments").toString());
+            rooms.add(room);
+        }
+        return rooms;
+    }
+
+    @Override
+    public ArrayList<Departure> getAllDepartures() {
+        return null;
+    }
+
+    @Override
+    public void addRoom(Room room) {
+        Document newRoom = new Document("CorpusNumber", room.getCorpusNumber())
+                .append("RoomNumber", room.getRoomNumber())
+                .append("MaxPeople", room.getMaxPeople())
+                .append("Equipments", room.getEquipments());
+
+        addNewField(Consts.ROOM_COLLECTION, newRoom);
     }
 }

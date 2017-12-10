@@ -1,21 +1,16 @@
 package Units;
 
-import javafx.beans.property.SimpleIntegerProperty;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class Room  {
+public class Room {
     private int corpusNumber;
     private int roomNumber;
     private int maxPeople;
-    private String[] equipments;
+    private String equipments;
 
-    public Room(int _corpusNumber, int _roomNumber, int _maxPeople, String[] _equipments){
+    public Room(int _corpusNumber, int _roomNumber, int _maxPeople, String _equipments){
         corpusNumber = _corpusNumber;
         roomNumber = _roomNumber;
         maxPeople = _maxPeople;
-        equipments =  _equipments.clone();
+        equipments =  _equipments;
     }
     public int getCorpusNumber() {
         return corpusNumber;
@@ -41,11 +36,27 @@ public class Room  {
         this.maxPeople = maxPeople;
     }
 
-    public String[] getEquipments() {
+    public String getEquipments() {
         return equipments;
     }
 
-    public void setEquipments(String[] equipments) {
-        this.equipments = equipments.clone();
+    public void setEquipments(String equipments) {
+        this.equipments = equipments;
+    }
+    @Override
+    public boolean equals(Object other){
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof Room))return false;
+        Room room = (Room)other;
+        if (this.roomNumber != room.roomNumber)
+            return false;
+        if (this.corpusNumber != room.corpusNumber)
+            return false;
+        if (this.maxPeople != room.maxPeople)
+            return false;
+        if (!this.equipments.equals(room.equipments))
+            return false;
+        return true;
     }
 }
