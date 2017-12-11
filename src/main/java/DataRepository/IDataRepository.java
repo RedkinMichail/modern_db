@@ -11,5 +11,5 @@ public interface IDataRepository {
 
     void addRoom(Room room);
 
-    void addDeparture(Departure departure);
+    void addDeparture(Departure departure) throws Exception;
 }

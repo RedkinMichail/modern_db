@@ -29,13 +29,20 @@ public class WhenAdd {
     }
 
     @Test
-    public void DepartureAndInvokeGetAllDepartures_ResultShouldContainThatDeparture(){
+    public void DepartureAndInvokeGetAllDepartures_ResultShouldContainThatDeparture() throws Exception {
         Departure departure = new Departure(1,"University");
 
         dataRepository.addDeparture(departure);
         departures = dataRepository.getAllDepartures();
 
         Assert.assertTrue(departures.contains(departure));
+    }
+
+    @Test(expected = Exception.class)
+    public void DepartureWithUnknownParentId_ShouldThrowException() throws Exception {
+        Departure departure = new Departure(2,"ITMM", 2);
+
+        dataRepository.addDeparture(departure);
     }
 
 

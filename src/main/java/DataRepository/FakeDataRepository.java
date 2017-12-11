@@ -28,7 +28,18 @@ public class FakeDataRepository implements IDataRepository {
     }
 
     @Override
-    public void addDeparture(Departure departure) {
+    public void addDeparture(Departure departure) throws Exception {
+        if(departure.getParentId() != 0) {
+            getDepartureById(departure.getParentId());
+        }
         departures.add(departure);
+    }
+
+    public Departure getDepartureById(int id) throws Exception {
+        for (int i = 0; i < departures.size(); i++){
+            if(departures.get(i).getId() == id)
+                return departures.get(i);
+        }
+        throw new Exception("Not found departure with same id");
     }
 }
