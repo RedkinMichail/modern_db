@@ -12,4 +12,6 @@ public interface IDataRepository {
     void addRoom(Room room);
 
     void addDeparture(Departure departure) throws Exception;
+
+    Departure getDepartureById(int id) throws Exception;
 }

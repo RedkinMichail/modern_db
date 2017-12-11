@@ -1,6 +1,5 @@
 import DataRepository.FakeDataRepository;
 import DataRepository.IDataRepository;
-import DataRepository.DataRepository;
 import Units.Departure;
 import Units.Room;
 import org.junit.Assert;
@@ -8,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
 
 public class WhenAdd {
     private IDataRepository dataRepository;
@@ -39,10 +40,26 @@ public class WhenAdd {
     }
 
     @Test(expected = Exception.class)
+    public void InvokeGetDepartmentWithUnknownId_ShouldThrowException() throws Exception {
+        dataRepository.getDepartureById(1);
+    }
+
+    @Test(expected = Exception.class)
     public void DepartureWithUnknownParentId_ShouldThrowException() throws Exception {
         Departure departure = new Departure(2,"ITMM", 2);
 
         dataRepository.addDeparture(departure);
+    }
+
+    @Test
+    public void DepartureWithKnownParentId_ShouldAdded() throws Exception {
+        Departure parentDeparture = new Departure(1,"University");
+        Departure departure = new Departure(2,"ITMM", 1);
+
+        dataRepository.addDeparture(parentDeparture);
+        dataRepository.addDeparture(departure);
+
+        assertEquals(dataRepository.getDepartureById(departure.getId()), departure);
     }
 
 

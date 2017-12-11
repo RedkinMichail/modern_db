@@ -34,7 +34,7 @@ public class FakeDataRepository implements IDataRepository {
         }
         departures.add(departure);
     }
-
+    @Override
     public Departure getDepartureById(int id) throws Exception {
         for (int i = 0; i < departures.size(); i++){
             if(departures.get(i).getId() == id)

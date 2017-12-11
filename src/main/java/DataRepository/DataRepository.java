@@ -151,4 +151,9 @@ public class DataRepository implements IDataRepository {
     public void addDeparture(Departure departure) {
 
     }
+
+    @Override
+    public Departure getDepartureById(int id) {
+        return null;
+    }
 }
