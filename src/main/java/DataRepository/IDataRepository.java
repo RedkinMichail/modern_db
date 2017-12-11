@@ -10,4 +10,6 @@ public interface IDataRepository {
     ArrayList<Departure> getAllDepartures();//возвращает все департаменты
 
     void addRoom(Room room);
+
+    void addDeparture(Departure departure);
 }

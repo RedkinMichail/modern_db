@@ -48,22 +48,6 @@ public class DataViewWindow {
                 tableView.getColumns().addAll(column1, column2, column3, column4);
             }
         });
-        viewDepartmentsButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(final ActionEvent event) {
-                tableView.setEditable(true);
-                column1.setText("Номер корпуса");
-                column1.setCellValueFactory(new PropertyValueFactory<RowModel, String>("column1"));
-                column2.setText("Название подразделения");
-                column2.setCellValueFactory(new PropertyValueFactory<RowModel, String>("column2"));
-                column3.setText("Код вышестоящего подразделения");
-                column3.setCellValueFactory(new PropertyValueFactory<RowModel, String>("column3"));
-                column4.setText("Код руководителя подразделения");
-                column4.setCellValueFactory(new PropertyValueFactory<RowModel, String>("column4"));
-                tableView.getColumns().removeAll(column1, column2, column3, column4);
-                tableView.setItems(viewModel.getDepartureList());
-                tableView.getColumns().addAll(column1, column2, column3, column4);
-            }
-        });
+
     }
 }

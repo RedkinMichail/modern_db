@@ -146,4 +146,9 @@ public class DataRepository implements IDataRepository {
 
         addNewField(Consts.ROOM_COLLECTION, newRoom);
     }
+
+    @Override
+    public void addDeparture(Departure departure) {
+
+    }
 }

@@ -20,11 +20,4 @@ public class DataViewModel {
         return observableList;
     }
 
-    public ObservableList<RowModel> getDepartureList() {
-        System.out.println("getDepartureList button");
-        ArrayList<RowModel> departures = new ArrayList<RowModel>();
-        departures.add(new RowModel(new Departure(2,"ФИИТ",1, 3)));
-        ObservableList<RowModel> observableList = FXCollections.observableList(departures);
-        return observableList;
-    }
 }

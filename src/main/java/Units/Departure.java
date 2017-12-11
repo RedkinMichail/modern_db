@@ -4,14 +4,17 @@ public class Departure {
     private int id;
     private String name;
     private int parentId;
-    private int leaderId;
 
-    public Departure(int id, String name, int parentId, int leaderId){
+    public Departure(int id, String name, int parentId){
         this.id = id;
         this.name = name;
         this.parentId = parentId;
-        this.leaderId = leaderId;
     }
+    public Departure(int id, String name){
+        this.id = id;
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }
@@ -36,11 +39,18 @@ public class Departure {
         this.parentId = parentId;
     }
 
-    public int getLeaderId() {
-        return leaderId;
-    }
-
-    public void setLeaderId(int leaderId) {
-        this.leaderId = leaderId;
+    @Override
+    public boolean equals(Object other){
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof Departure))return false;
+        Departure departure = (Departure)other;
+        if (this.id != departure.id)
+            return false;
+        if (this.name.equals(departure.name))
+            return false;
+        if (this.parentId != departure.parentId)
+            return false;
+        return true;
     }
 }

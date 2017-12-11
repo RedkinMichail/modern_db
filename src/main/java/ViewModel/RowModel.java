@@ -21,7 +21,6 @@ public class RowModel {
         column1 = new SimpleStringProperty(String.valueOf(departure.getId()));
         column2 = new SimpleStringProperty(String.valueOf(departure.getName()));
         column3 = new SimpleStringProperty(String.valueOf(departure.getParentId()));
-        column4 = new SimpleStringProperty(String.valueOf(departure.getLeaderId()));
     }
 
     public RowModel(StudyUnit studyUnit){

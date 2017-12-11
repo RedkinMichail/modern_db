@@ -7,8 +7,10 @@ import java.util.ArrayList;
 
 public class FakeDataRepository implements IDataRepository {
     ArrayList<Room> rooms;
+    ArrayList<Departure> departures;
     public FakeDataRepository(){
         rooms = new ArrayList<>();
+        departures = new ArrayList<>();
     }
     @Override
     public ArrayList<Room> getAllRooms() {
@@ -17,11 +19,16 @@ public class FakeDataRepository implements IDataRepository {
 
     @Override
     public ArrayList<Departure> getAllDepartures() {
-        return null;
+        return departures;
     }
 
     @Override
     public void addRoom(Room room) {
         rooms.add(room);
+    }
+
+    @Override
+    public void addDeparture(Departure departure) {
+        departures.add(departure);
     }
 }
