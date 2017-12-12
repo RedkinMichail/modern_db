@@ -1,5 +1,6 @@
 import DataRepository.FakeDataRepository;
 import DataRepository.IDataRepository;
+import DataRepository.DataRepository;
 import Units.Departure;
 import Units.Room;
 import org.junit.Assert;
@@ -18,15 +19,22 @@ public class WhenAdd {
     @Before
     public void setUp(){
         dataRepository =  new FakeDataRepository();
-        room = new Room(1,1,20,"desk,computer");
+        //dataRepository = new DataRepository();
+        room = new Room(1,2,20,"desk,computer");
     }
 
     @Test
-    public void RoomAndInvokeGetAllRooms_ResultShouldContainThatRoom(){
+    public void RoomAndInvokeGetAllRooms_ResultShouldContainThatRoom() throws Exception{
         dataRepository.addRoom(room);
         rooms = dataRepository.getAllRooms();
 
         Assert.assertTrue(rooms.contains(room));
+    }
+
+    @Test(expected = Exception.class)
+    public void TwoEqualRooms_ShouldThrowException() throws Exception{
+        dataRepository.addRoom(room);
+        dataRepository.addRoom(room);
     }
 
     @Test

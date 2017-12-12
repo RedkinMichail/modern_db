@@ -47,7 +47,7 @@ public class Departure {
         Departure departure = (Departure)other;
         if (this.id != departure.id)
             return false;
-        if (this.name.equals(departure.name))
+        if (!this.name.equals(departure.name))
             return false;
         if (this.parentId != departure.parentId)
             return false;
