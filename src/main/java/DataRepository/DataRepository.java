@@ -122,15 +122,23 @@ public class DataRepository implements IDataRepository {
     }
 
     @Override
-    public void addDeparture(Departure departure) {
+    public void addDeparture(Departure departure) throws Exception{
+        if(departure.getParentId() != 0) {
+            getDepartureById(departure.getParentId());
+        }
         Document newDepartment = new Document("Id", departure.getId())
                 .append("Name", departure.getName())
                 .append("ParentId", departure.getParentId());
-            database.getCollection(CollectionNames.DEPARTURE_COLLECTION).insertOne(newDepartment);
+        database.getCollection(CollectionNames.DEPARTURE_COLLECTION).insertOne(newDepartment);
     }
 
     @Override
-    public Departure getDepartureById(int id) {
-        return null;
+    public Departure getDepartureById(int id) throws Exception {
+        MongoCursor<Document> cursor = database.getCollection(CollectionNames.DEPARTURE_COLLECTION).find(new Document("Id", id)).iterator();
+        if (cursor.hasNext()){
+            Document document = cursor.next();
+            return new Departure(document.getInteger("Id"),document.getString("Name"), document.getInteger("ParentId"));
+        }
+        throw new Exception("Departure with sush id doesn't exist");
     }
 }

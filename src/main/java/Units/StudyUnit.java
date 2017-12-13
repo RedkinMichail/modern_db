@@ -3,6 +3,7 @@ package Units;
 public class StudyUnit {
     private int id;
     private int parentId;
+    private int departmentId;
     private int peopleCount;
 
     public int getId() {
@@ -27,5 +28,13 @@ public class StudyUnit {
 
     public void setPeopleCount(int peopleCount) {
         this.peopleCount = peopleCount;
+    }
+
+    public int getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
     }
 }

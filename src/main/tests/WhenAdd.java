@@ -19,7 +19,7 @@ public class WhenAdd {
     @Before
     public void setUp(){
         dataRepository =  new FakeDataRepository();
-        //dataRepository = new DataRepository();
+        dataRepository = new DataRepository();
         room = new Room(1,2,20,"desk,computer");
     }
 
@@ -69,6 +69,5 @@ public class WhenAdd {
 
         assertEquals(dataRepository.getDepartureById(departure.getId()), departure);
     }
-
 
 }
