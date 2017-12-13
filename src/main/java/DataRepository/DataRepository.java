@@ -1,7 +1,9 @@
 package DataRepository;
 
-import Units.Departure;
+import Units.Department;
 import Units.Room;
+import Units.StudyUnit;
+import Units.Teacher;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoWriteException;
@@ -27,12 +29,15 @@ public class DataRepository implements IDataRepository {
     private void InitializeDataBase() {
         database.drop();
         database.getCollection(CollectionNames.ROOM_COLLECTION).createIndex(new Document("CorpusNumber", 1)
-                .append("RoomNumber", 1),new IndexOptions().unique(true));
+                .append("RoomNumber", 1), new IndexOptions().unique(true));
 
-        database.getCollection(CollectionNames.DEPARTURE_COLLECTION).createIndex(new Document("Id", 1),new IndexOptions().unique(true));
-        database.getCollection(CollectionNames.DEPARTURE_COLLECTION).createIndex(new Document("Name", 1),new IndexOptions().unique(true));
+        database.getCollection(CollectionNames.DEPARTMENT_COLLECTION).createIndex(new Document("Id", 1), new IndexOptions().unique(true));
+        database.getCollection(CollectionNames.DEPARTMENT_COLLECTION).createIndex(new Document("Name", 1), new IndexOptions().unique(true));
 
         database.getCollection(CollectionNames.STUDYUNIT_COLLECTION).createIndex(new Document("Id",1), new IndexOptions().unique(true));
+
+        database.getCollection(CollectionNames.TEACHER_COLLECTION).createIndex(new Document("PassportSeries", 1)
+                .append("PassportNumber", 1), new IndexOptions().unique(true));
     }
 
     @Override
@@ -42,28 +47,59 @@ public class DataRepository implements IDataRepository {
 
         while (cursor.hasNext()){
             Document doc = cursor.next();
-            Room room = new Room(doc.getInteger("CorpusNumber")
-            ,doc.getInteger("RoomNumber")
-            ,doc.getInteger("MaxPeople")
-            ,doc.get("Equipments").toString());
+            Room room = new Room(doc.getInteger("CorpusNumber"),
+            doc.getInteger("RoomNumber"),
+            doc.getInteger("MaxPeople"),
+            doc.get("Equipments").toString());
             rooms.add(room);
         }
         return rooms;
     }
 
     @Override
-    public ArrayList<Departure> getAllDepartures() {
-        MongoCursor<Document> cursor = database.getCollection(CollectionNames.DEPARTURE_COLLECTION).find().iterator();
-        ArrayList<Departure> departures = new ArrayList<>();
+    public ArrayList<Department> getAllDepartments() {
+        MongoCursor<Document> cursor = database.getCollection(CollectionNames.DEPARTMENT_COLLECTION).find().iterator();
+        ArrayList<Department> Departments = new ArrayList<>();
 
         while (cursor.hasNext()){
             Document doc = cursor.next();
-            Departure departure = new Departure(doc.getInteger("Id")
-                    ,doc.getString("Name")
-                    ,doc.getInteger("ParentId"));
-            departures.add(departure);
+            Department Department = new Department(doc.getInteger("Id"),
+                    doc.getString("Name"),
+                    doc.getInteger("ParentId"));
+            Departments.add(Department);
         }
-        return departures;
+        return Departments;
+    }
+
+    @Override
+    public ArrayList<StudyUnit> getAllStudyUnits() {
+        MongoCursor<Document> cursor = database.getCollection(CollectionNames.STUDYUNIT_COLLECTION).find().iterator();
+        ArrayList<StudyUnit> studyUnits = new ArrayList<>();
+
+        while (cursor.hasNext()){
+            Document doc = cursor.next();
+            StudyUnit studyUnit = new StudyUnit(doc.getInteger("Id"),
+                    doc.getInteger("DepartmentId"),
+                    doc.getInteger("PeopleCount"));
+            studyUnits.add(studyUnit);
+        }
+        return studyUnits;
+    }
+
+    @Override
+    public ArrayList<Teacher> getAllTeachers() {
+        MongoCursor<Document> cursor = database.getCollection(CollectionNames.TEACHER_COLLECTION).find().iterator();
+        ArrayList<Teacher> teachers = new ArrayList<>();
+
+        while (cursor.hasNext()){
+            Document doc = cursor.next();
+            Teacher teacher = new Teacher(doc.getString("FullName"),
+                    doc.getInteger("PassportSeries"),
+                    doc.getInteger("PassportNumber"),
+                    doc.getInteger("DepartmentId"));
+            teachers.add(teacher);
+        }
+        return teachers;
     }
 
     @Override
@@ -76,23 +112,75 @@ public class DataRepository implements IDataRepository {
     }
 
     @Override
-    public void addDeparture(Departure departure) throws Exception{
-        if(departure.getParentId() != 0) {
-            getDepartureById(departure.getParentId());
+    public void addDepartment(Department Department) throws Exception{
+        if(Department.getParentId() != 0) {
+            getDepartmentById(Department.getParentId());
         }
-        Document newDepartment = new Document("Id", departure.getId())
-                .append("Name", departure.getName())
-                .append("ParentId", departure.getParentId());
-        database.getCollection(CollectionNames.DEPARTURE_COLLECTION).insertOne(newDepartment);
+        Document newDepartment = new Document("Id", Department.getId())
+                .append("Name", Department.getName())
+                .append("ParentId", Department.getParentId());
+        database.getCollection(CollectionNames.DEPARTMENT_COLLECTION).insertOne(newDepartment);
     }
 
     @Override
-    public Departure getDepartureById(int id) throws Exception {
-        MongoCursor<Document> cursor = database.getCollection(CollectionNames.DEPARTURE_COLLECTION).find(new Document("Id", id)).iterator();
+    public void addStudyUnit(StudyUnit studyUnit) throws Exception {
+        if(studyUnit.getParentId() != 0) {
+            getStudyUnitById(studyUnit.getParentId());
+        }
+        Document newStudyUnit = new Document("Id", studyUnit.getId())
+                .append("DepartmentId", studyUnit.getDepartmentId())
+                .append("PeopleCount", studyUnit.getPeopleCount())
+                .append("ParentId", studyUnit.getParentId());
+        database.getCollection(CollectionNames.STUDYUNIT_COLLECTION).insertOne(newStudyUnit);
+    }
+
+    @Override
+    public Department getDepartmentById(int id) throws Exception {
+        MongoCursor<Document> cursor = database.getCollection(CollectionNames.DEPARTMENT_COLLECTION).find(new Document("Id", id)).iterator();
         if (cursor.hasNext()){
             Document document = cursor.next();
-            return new Departure(document.getInteger("Id"),document.getString("Name"), document.getInteger("ParentId"));
+            return new Department(document.getInteger("Id"), document.getString("Name"), document.getInteger("ParentId"));
         }
-        throw new Exception("Departure with sush id doesn't exist");
+        throw new Exception("Department with such id doesn't exist");
+    }
+
+    @Override
+    public StudyUnit getStudyUnitById(int id) throws Exception {
+        MongoCursor<Document> cursor = database.getCollection(CollectionNames.STUDYUNIT_COLLECTION).find(new Document("Id", id)).iterator();
+        if (cursor.hasNext()){
+            Document document = cursor.next();
+            return new StudyUnit(document.getInteger("Id"),
+                    document.getInteger("DepartmentId"),
+                    document.getInteger("PeopleCount"),
+                    document.getInteger("ParentId"));
+        }
+        throw new Exception("StudyUnit with id = " + id + " doesn't exist");
+    }
+
+    @Override
+    public void addTeacher(Teacher teacher) {
+        Document newTeacher = new Document("FullName", teacher.getFullName())
+                .append("PassportSeries", teacher.getPassportSeries())
+                .append("PassportNumber", teacher.getPassportNumber())
+                .append("DepartmentId", teacher.getDepartmentId());
+        database.getCollection(CollectionNames.TEACHER_COLLECTION).insertOne(newTeacher);
+    }
+
+    @Override
+    public Teacher getTeacherByPassportSeriesAndPassportNumber(int passportSeries, int passportNumber) throws Exception {
+        MongoCursor<Document> cursor = database.getCollection(CollectionNames.TEACHER_COLLECTION)
+                .find(new Document("PassportSeries", passportSeries)
+                .append("PassportNumber", passportNumber))
+                .iterator();
+
+        if (cursor.hasNext()){
+            Document document = cursor.next();
+            return new Teacher(document.getString("FullName"),
+                    document.getInteger("PassportSeries"),
+                    document.getInteger("PassportNumber"),
+                    document.getInteger("DepartmentId"));
+        }
+        throw new Exception("Teacher with PassportSeries = " + passportSeries
+                + " and PassportNumber = " + passportNumber + " doesn't exist");
     }
 }

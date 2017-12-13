@@ -1,7 +1,6 @@
 package ViewModel;
 
 import DataRepository.IDataRepository;
-import Units.Departure;
 import Units.Room;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

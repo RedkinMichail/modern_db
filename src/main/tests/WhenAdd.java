@@ -1,9 +1,9 @@
-import DataRepository.FakeDataRepository;
 import DataRepository.IDataRepository;
 import DataRepository.DataRepository;
-import Units.Departure;
+import Units.Department;
 import Units.Room;
 import Units.StudyUnit;
+import Units.Teacher;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,8 +15,11 @@ import static org.junit.Assert.assertEquals;
 public class WhenAdd {
     private IDataRepository dataRepository;
     private ArrayList<Room> rooms;
-    private ArrayList<Departure> departures;
+    private ArrayList<Department> departments;
+    private ArrayList<StudyUnit> studyUnits;
+    private ArrayList<Teacher> teachers;
     private Room room;
+
     @Before
     public void setUp(){
         dataRepository = new DataRepository();
@@ -38,38 +41,101 @@ public class WhenAdd {
     }
 
     @Test
-    public void DepartureAndGetAllDepartures_ResultShouldContainThatDeparture() throws Exception {
-        Departure departure = new Departure(1,"University");
+    public void DepartmentAndGetAllDepartments_ResultShouldContainThatDepartment() throws Exception {
+        Department department = new Department(1,"University");
 
-        dataRepository.addDeparture(departure);
-        departures = dataRepository.getAllDepartures();
+        dataRepository.addDepartment(department);
+        departments = dataRepository.getAllDepartments();
 
-        Assert.assertTrue(departures.contains(departure));
+        Assert.assertTrue(departments.contains(department));
     }
 
     @Test(expected = Exception.class)
     public void GetDepartmentWithUnknownId_ShouldThrowException() throws Exception {
-        dataRepository.getDepartureById(1);
+        dataRepository.getDepartmentById(1);
     }
 
     @Test(expected = Exception.class)
-    public void DepartureWithUnknownParentId_ShouldThrowException() throws Exception {
-        Departure departure = new Departure(2,"ITMM", 2);
+    public void DepartmentWithUnknownParentId_ShouldThrowException() throws Exception {
+        Department department = new Department(2,"ITMM", 2);
 
-        dataRepository.addDeparture(departure);
+        dataRepository.addDepartment(department);
     }
 
     @Test
-    public void DepartureWithKnownParentId_ShouldAdded() throws Exception {
-        Departure parentDeparture = new Departure(1,"University");
-        Departure departure = new Departure(2,"ITMM", 1);
+    public void DepartmentWithKnownParentId_ShouldBeAdded() throws Exception {
+        Department parentDepartment = new Department(1,"University");
+        Department department = new Department(2,"ITMM", 1);
 
-        dataRepository.addDeparture(parentDeparture);
-        dataRepository.addDeparture(departure);
+        dataRepository.addDepartment(parentDepartment);
+        dataRepository.addDepartment(department);
 
-        assertEquals(dataRepository.getDepartureById(departure.getId()), departure);
+        assertEquals(dataRepository.getDepartmentById(department.getId()), department);
     }
 
+    @Test(expected = Exception.class)
+    public void StudyUnitWithUnknownId_ShouldThrowException() throws Exception {
+        dataRepository.getStudyUnitById(123);
+    }
 
+    @Test(expected = Exception.class)
+    public void StudyUnitWithUnknownParentId_ShouldThrowException() throws Exception {
+        StudyUnit studyUnit = new StudyUnit(1, 2, 10, 3);
+        dataRepository.addStudyUnit(studyUnit);
+    }
 
+    @Test
+    public void StudyUnitWithKnownParentId_ShouldBeAdded() throws Exception {
+        StudyUnit parentStudyUnit = new StudyUnit(2, 6, 5);
+        StudyUnit studyUnit = new StudyUnit(1, 6, 10, 2);
+
+        dataRepository.addStudyUnit(parentStudyUnit);
+        dataRepository.addStudyUnit(studyUnit);
+
+        assertEquals(dataRepository.getStudyUnitById(studyUnit.getId()), studyUnit);
+    }
+
+    @Test(expected = Exception.class)
+    public void TwoEqualStudyUnits_ShouldThrowException() throws Exception {
+        StudyUnit studyUnit = new StudyUnit(2, 6, 5);
+        dataRepository.addStudyUnit(studyUnit);
+        dataRepository.addStudyUnit(studyUnit);
+    }
+
+    @Test
+    public void GetAllStudyUnits() throws Exception {
+        StudyUnit studyUnit = new StudyUnit(2, 6, 5);
+
+        dataRepository.addStudyUnit(studyUnit);
+        studyUnits = dataRepository.getAllStudyUnits();
+
+        Assert.assertTrue(studyUnits.contains(studyUnit));
+    }
+
+    @Test
+    public void TeacherCanBeAddedAndExists() throws Exception {
+        Teacher teacher = new Teacher("Ab Bc Cd", 123, 321, 5);
+
+        dataRepository.addTeacher(teacher);
+
+        assertEquals(dataRepository.getTeacherByPassportSeriesAndPassportNumber(teacher.getPassportSeries(), teacher.getPassportNumber()),
+                teacher);
+    }
+
+    @Test
+    public void GetAllTeachers() throws Exception {
+        Teacher teacher = new Teacher("Ab Bc Cd", 123, 321, 5);
+
+        dataRepository.addTeacher(teacher);
+        teachers = dataRepository.getAllTeachers();
+
+        Assert.assertTrue(teachers.contains(teacher));
+    }
+
+    @Test(expected = Exception.class)
+    public void TwoEqualTeachers_ShouldThrowException() throws Exception {
+        Teacher teacher = new Teacher("Ab Bc Cd", 123, 321, 5);
+        dataRepository.addTeacher(teacher);
+        dataRepository.addTeacher(teacher);
+    }
 }

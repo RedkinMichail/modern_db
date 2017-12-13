@@ -1,16 +1,18 @@
 package DataRepository;
 
-import Units.Departure;
+import Units.Department;
 import Units.Room;
+import Units.StudyUnit;
+import Units.Teacher;
 
 import java.util.ArrayList;
 
 public class FakeDataRepository implements IDataRepository {
     ArrayList<Room> rooms;
-    ArrayList<Departure> departures;
+    ArrayList<Department> departments;
     public FakeDataRepository(){
         rooms = new ArrayList<>();
-        departures = new ArrayList<>();
+        departments = new ArrayList<>();
     }
     @Override
     public ArrayList<Room> getAllRooms() {
@@ -18,8 +20,18 @@ public class FakeDataRepository implements IDataRepository {
     }
 
     @Override
-    public ArrayList<Departure> getAllDepartures() {
-        return departures;
+    public ArrayList<Department> getAllDepartments() {
+        return departments;
+    }
+
+    @Override
+    public ArrayList<StudyUnit> getAllStudyUnits() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Teacher> getAllTeachers() {
+        return null;
     }
 
     @Override
@@ -28,18 +40,39 @@ public class FakeDataRepository implements IDataRepository {
     }
 
     @Override
-    public void addDeparture(Departure departure) throws Exception {
-        if(departure.getParentId() != 0) {
-            getDepartureById(departure.getParentId());
+    public void addDepartment(Department department) throws Exception {
+        if(department.getParentId() != 0) {
+            getDepartmentById(department.getParentId());
         }
-        departures.add(departure);
+        departments.add(department);
     }
+
     @Override
-    public Departure getDepartureById(int id) throws Exception {
-        for (int i = 0; i < departures.size(); i++){
-            if(departures.get(i).getId() == id)
-                return departures.get(i);
+    public void addStudyUnit(StudyUnit studyUnit) throws Exception {
+
+    }
+
+    @Override
+    public Department getDepartmentById(int id) throws Exception {
+        for (int i = 0; i < departments.size(); i++){
+            if(departments.get(i).getId() == id)
+                return departments.get(i);
         }
         throw new Exception("Not found departure with same id");
+    }
+
+    @Override
+    public StudyUnit getStudyUnitById(int id) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void addTeacher(Teacher teacher) {
+
+    }
+
+    @Override
+    public Teacher getTeacherByPassportSeriesAndPassportNumber(int passportSeries, int passportNumber) throws Exception {
+        return null;
     }
 }
