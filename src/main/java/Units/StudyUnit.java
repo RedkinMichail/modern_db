@@ -2,10 +2,21 @@ package Units;
 
 public class StudyUnit {
     private int id;
-    private int parentId;
     private int departmentId;
     private int peopleCount;
+    private int parentId;
 
+    public StudyUnit(int id, int departmentId, int peopleCount, int parentId) {
+        this.id = id;
+        this.id = departmentId;
+        this.peopleCount = peopleCount;
+        this.parentId = parentId;
+    }
+    public StudyUnit(int id, int departmentId, int peopleCount) {
+        this.id = id;
+        this.id = departmentId;
+        this.peopleCount = peopleCount;
+    }
     public int getId() {
         return id;
     }

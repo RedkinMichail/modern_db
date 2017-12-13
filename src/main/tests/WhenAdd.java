@@ -3,6 +3,7 @@ import DataRepository.IDataRepository;
 import DataRepository.DataRepository;
 import Units.Departure;
 import Units.Room;
+import Units.StudyUnit;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,13 +19,12 @@ public class WhenAdd {
     private Room room;
     @Before
     public void setUp(){
-        dataRepository =  new FakeDataRepository();
         dataRepository = new DataRepository();
         room = new Room(1,2,20,"desk,computer");
     }
 
     @Test
-    public void RoomAndInvokeGetAllRooms_ResultShouldContainThatRoom() throws Exception{
+    public void RoomAndGetAllRooms_ResultShouldContainThatRoom() throws Exception{
         dataRepository.addRoom(room);
         rooms = dataRepository.getAllRooms();
 
@@ -38,7 +38,7 @@ public class WhenAdd {
     }
 
     @Test
-    public void DepartureAndInvokeGetAllDepartures_ResultShouldContainThatDeparture() throws Exception {
+    public void DepartureAndGetAllDepartures_ResultShouldContainThatDeparture() throws Exception {
         Departure departure = new Departure(1,"University");
 
         dataRepository.addDeparture(departure);
@@ -48,7 +48,7 @@ public class WhenAdd {
     }
 
     @Test(expected = Exception.class)
-    public void InvokeGetDepartmentWithUnknownId_ShouldThrowException() throws Exception {
+    public void GetDepartmentWithUnknownId_ShouldThrowException() throws Exception {
         dataRepository.getDepartureById(1);
     }
 
@@ -69,5 +69,7 @@ public class WhenAdd {
 
         assertEquals(dataRepository.getDepartureById(departure.getId()), departure);
     }
+
+
 
 }
