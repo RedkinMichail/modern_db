@@ -1,9 +1,6 @@
 package DataRepository;
 
-import Units.Department;
-import Units.Room;
-import Units.StudyUnit;
-import Units.Teacher;
+import Units.*;
 
 import java.util.ArrayList;
 
@@ -26,4 +23,8 @@ public interface IDataRepository {
     void addTeacher(Teacher teacher);
 
     Teacher getTeacherByPassportSeriesAndPassportNumber(int passportSeries, int passportNumber) throws Exception;
+
+    void addLesson(Lesson lesson) throws Exception;
+
+    ArrayList<Lesson> getLessonsByStudyUnitId(int id);
 }

@@ -1,9 +1,6 @@
 package DataRepository;
 
-import Units.Department;
-import Units.Room;
-import Units.StudyUnit;
-import Units.Teacher;
+import Units.*;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoWriteException;
@@ -14,6 +11,7 @@ import com.mongodb.client.model.IndexOptions;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -182,5 +180,30 @@ public class DataRepository implements IDataRepository {
         }
         throw new Exception("Teacher with PassportSeries = " + passportSeries
                 + " and PassportNumber = " + passportNumber + " doesn't exist");
+    }
+
+    @Override
+    public void addLesson(Lesson lesson) throws Exception {
+        StudyUnit studyUnit = getStudyUnitById(lesson.getStudyUnitId());
+        Document newLesson = new Document("Name", lesson.getName())
+                .append("StartDate", lesson.getStartDate().toString())
+                .append("EndDate", lesson.getEndDate().toString());
+        database.getCollection(CollectionNames.LESSON_COLLECTION).insertOne(newLesson);
+    }
+
+    @Override
+    public ArrayList<Lesson> getLessonsByStudyUnitId(int id) {
+        MongoCursor<Document> cursor = database.getCollection(CollectionNames.LESSON_COLLECTION)
+                .find(new Document("StudyUnitId", id)).iterator();
+        ArrayList<Lesson> lessons = new ArrayList<>();
+
+        while (cursor.hasNext()){
+            Document doc = cursor.next();
+            Lesson lesson = new Lesson(doc.getInteger("StudyUnitId")
+                    , doc.getString("Name")
+                    , LocalDateTime.parse(doc.getString("startDate")));
+            lessons.add(lesson);
+        }
+        return lessons;
     }
 }

@@ -1,12 +1,10 @@
 import DataRepository.IDataRepository;
 import DataRepository.DataRepository;
-import Units.Department;
-import Units.Room;
-import Units.StudyUnit;
-import Units.Teacher;
+import Units.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import java.time.LocalDateTime;
 
 import java.util.ArrayList;
 
@@ -18,6 +16,7 @@ public class WhenAdd {
     private ArrayList<Department> departments;
     private ArrayList<StudyUnit> studyUnits;
     private ArrayList<Teacher> teachers;
+    private ArrayList<Lesson> lessons;
     private Room room;
 
     @Before
@@ -114,7 +113,7 @@ public class WhenAdd {
 
     @Test
     public void TeacherCanBeAddedAndExists() throws Exception {
-        Teacher teacher = new Teacher("Ab Bc Cd", 123, 321, 5);
+        Teacher teacher = new Teacher("Petrov P. A.", 123, 321, 5);
 
         dataRepository.addTeacher(teacher);
 
@@ -124,7 +123,7 @@ public class WhenAdd {
 
     @Test
     public void GetAllTeachers() throws Exception {
-        Teacher teacher = new Teacher("Ab Bc Cd", 123, 321, 5);
+        Teacher teacher = new Teacher("Petrov P. A.", 123, 321, 5);
 
         dataRepository.addTeacher(teacher);
         teachers = dataRepository.getAllTeachers();
@@ -134,8 +133,27 @@ public class WhenAdd {
 
     @Test(expected = Exception.class)
     public void TwoEqualTeachers_ShouldThrowException() throws Exception {
-        Teacher teacher = new Teacher("Ab Bc Cd", 123, 321, 5);
+        Teacher teacher = new Teacher("Petrov P. A.", 123, 321, 5);
+
         dataRepository.addTeacher(teacher);
         dataRepository.addTeacher(teacher);
+    }
+
+    @Test(expected = Exception.class)
+    public void LessonWithUnknownStudyUnitId_ShouldThrowException() throws Exception {
+        Lesson lesson = new Lesson(1,"Mathematical analysis", LocalDateTime.now());
+
+        dataRepository.addLesson(lesson);
+    }
+
+    @Test
+    public void LessonAndGetLessons_ResultShouldContainThatLesson() throws Exception{
+        StudyUnit studyUnit = new StudyUnit(2, 6, 5);
+        Lesson lesson = new Lesson(2,"Mathematical analysis", LocalDateTime.now());
+
+        dataRepository.addStudyUnit(studyUnit);
+        dataRepository.addLesson(lesson);
+        lessons = dataRepository.getLessonsByStudyUnitId(studyUnit.getId());
+
     }
 }

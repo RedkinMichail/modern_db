@@ -1,9 +1,6 @@
 package DataRepository;
 
-import Units.Department;
-import Units.Room;
-import Units.StudyUnit;
-import Units.Teacher;
+import Units.*;
 
 import java.util.ArrayList;
 
@@ -73,6 +70,16 @@ public class FakeDataRepository implements IDataRepository {
 
     @Override
     public Teacher getTeacherByPassportSeriesAndPassportNumber(int passportSeries, int passportNumber) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void addLesson(Lesson lesson) {
+
+    }
+
+    @Override
+    public ArrayList<Lesson> getLessonsByStudyUnitId(int id) {
         return null;
     }
 }
